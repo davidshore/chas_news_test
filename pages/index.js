@@ -1,15 +1,15 @@
 import Subscribe from "@/components/Subscribe";
-import Link from "next/link";
+// import Link from "next/link";
 import { useState } from "react";
 
-const myAPI_KEY = "pub_3821264ea9fafb643277c959c927ef6f5e5f4";
-const myAPI_KEY2 = "pub_38716408743e7fde5ebe66221f6fd06ea2e5d";
+// const process.env.API_KEY = "pub_3821264ea9fafb643277c959c927ef6f5e5f4";
+// const process.env.API_KEY2 = "pub_38716408743e7fde5ebe66221f6fd06ea2e5d";
 
 export async function getStaticProps() {
   try {
     const fetchNews = async (category) => {
       const res = await fetch(
-        `https://newsdata.io/api/1/news?apikey=${myAPI_KEY2}&country=us&language=en&category=${category}`
+        `https://newsdata.io/api/1/news?apikey=${process.env.API_KEY}&country=us&language=en&category=${category}`
       );
 
       if (!res.ok) {
@@ -98,7 +98,7 @@ export default function News({
 
   if (error) {
     return (
-      <div className="flex justify-center items-center p-44">
+      <div className="flex items-center justify-center p-44">
         <h2 className="text-5xl text-center ">
           Oh no! Seems like we hit the rate limit. <br /> Check back in a bit
           for the headlines!
@@ -109,12 +109,12 @@ export default function News({
 
   return (
     <>
-      <div className="grid mt-10 grid-cols-4 gap-8 mx-20">
-        <div className="flex col-span-3 flex-col w-full px-0 ">
-          <ul className="list-none p-0">
+      <div className="grid grid-cols-4 gap-8 mx-20 mt-10">
+        <div className="flex flex-col w-full col-span-3 px-0 ">
+          <ul className="p-0 list-none">
             <div className="block mb-4 border-t-2 border-b-0 border-l-0 border-r-0 border-solid border-black dark:border-[#EEEFF2]">
               <div className="flex">
-                <h3 className="bg-black dark:bg-white text-white dark:text-black p-2 m-0 text-sm">
+                <h3 className="p-2 m-0 text-sm text-white bg-black dark:bg-white dark:text-black">
                   Our top pick
                 </h3>
               </div>
@@ -128,12 +128,12 @@ export default function News({
                     onMouseOver={() => handleMouseEnter(article.article_id)}
                     onMouseLeave={() => handleMouseLeave(article.article_id)}
                     key={article.article_id}
-                    className="flex mb-4 col-span-2 hover:cursor-pointer"
+                    className="flex col-span-2 mb-4 hover:cursor-pointer"
                   >
                     <div>
                       {index === 0 || index === 1 ? (
                         <img
-                          className="h-96 w-full object-cover"
+                          className="object-cover w-full h-96"
                           src={
                             article.image_url
                               ? article.image_url
@@ -142,21 +142,21 @@ export default function News({
                           alt=""
                         />
                       ) : null}
-                      <Link
+                      {/* <Link
                         className="no-underline"
                         href={`/article/${article.article_id}`}
                         passHref
+                      > */}
+                      <h2
+                        className={`$  text-black font-semibold dark:text-white text-5xl ${
+                          hovered[article.article_id]
+                            ? "underline decoration-2"
+                            : "no-underline"
+                        }`}
                       >
-                        <h2
-                          className={`$  text-black font-semibold dark:text-white text-5xl ${
-                            hovered[article.article_id]
-                              ? "underline decoration-2"
-                              : "no-underline"
-                          }`}
-                        >
-                          {article.title}
-                        </h2>
-                      </Link>
+                        {article.title}
+                      </h2>
+                      {/* </Link> */}
                       <p className="decoration-none">
                         Lorem ipsum dolor sit amet consectetur adipisicing elit.
                         Ad ipsum illum quia magni incidunt pariatur atque, error
@@ -169,11 +169,11 @@ export default function News({
         </div>
 
         {/* Right Side */}
-        <div className="col-span-1 flex  w-full ">
-          <ul className="list-none p-0">
+        <div className="flex w-full col-span-1 ">
+          <ul className="p-0 list-none">
             <div className="block mb-4 border-t-2 border-b-0 border-l-0 border-r-0 border-solid border-black dark:border-[#EEEFF2]">
               <div className="flex">
-                <h3 className="bg-black dark:bg-white text-white dark:text-black p-2 m-0 text-sm">
+                <h3 className="p-2 m-0 text-sm text-white bg-black dark:bg-white dark:text-black">
                   Latest
                 </h3>
               </div>
@@ -191,37 +191,37 @@ export default function News({
                     }`}
                   >
                     {" "}
-                    <Link
+                    {/* <Link
                       className="no-underline"
                       href={`/article/${article.article_id}`}
                       passHref
+                    > */}
+                    <h2
+                      className={`text-black dark:text-white text-lg w-full object-cover ${
+                        hovered[article.article_id]
+                          ? "underline decoration-2"
+                          : "no-underline"
+                      }`}
                     >
-                      <h2
-                        className={`text-black dark:text-white text-lg w-full object-cover ${
-                          hovered[article.article_id]
-                            ? "underline decoration-2"
-                            : "no-underline"
-                        }`}
-                      >
-                        {article.title}
-                      </h2>
-                    </Link>
+                      {article.title}
+                    </h2>
+                    {/* </Link> */}
                   </li>
                 ))}
           </ul>
         </div>
         {/* Business */}
-        <div className="col-span-4 px-0 flex flex-col justify-evenly">
+        <div className="flex flex-col col-span-4 px-0 justify-evenly">
           <div className="block mb-4 border-t-2 border-b-0 border-l-0 border-r-0 border-solid border-black dark:border-[#EEEFF2]">
             <div className="flex">
-              <h3 className="bg-black dark:bg-white text-white dark:text-black p-2 m-0 text-sm">
+              <h3 className="p-2 m-0 text-sm text-white bg-black dark:bg-white dark:text-black">
                 Business
               </h3>
             </div>
           </div>
 
           {/* Removed px-20 */}
-          <ul className="flex flex-row justify-evenly w-full p-0 flex-1">
+          <ul className="flex flex-row flex-1 w-full p-0 justify-evenly">
             {businessNews &&
               businessNews
                 .filter((article, index) => index >= 2 && index < 6)
@@ -236,10 +236,10 @@ export default function News({
                       index < 3 ? "custom-thin-border-right px-8" : ""
                     }`}
                   >
-                    <div className="flex flex-col space-y-2 mb-4">
+                    <div className="flex flex-col mb-4 space-y-2">
                       {article.image_url && (
                         <img
-                          className="h-28 w-full object-cover"
+                          className="object-cover w-full h-28"
                           src={
                             !article.image_url
                               ? "/Abstract HD.jpg"
@@ -248,20 +248,20 @@ export default function News({
                           alt=""
                         />
                       )}
-                      <Link
+                      {/* <Link
                         className="no-underline"
                         href={`/article/${article.article_id}`}
+                      > */}
+                      <h2
+                        className={`text-black dark:text-white text-2xl ${
+                          hovered[article.article_id]
+                            ? "underline decoration-2"
+                            : "no-underline"
+                        }`}
                       >
-                        <h2
-                          className={`text-black dark:text-white text-2xl ${
-                            hovered[article.article_id]
-                              ? "underline decoration-2"
-                              : "no-underline"
-                          }`}
-                        >
-                          {article.title}
-                        </h2>
-                      </Link>
+                        {article.title}
+                      </h2>
+                      {/* </Link> */}
                     </div>
                   </li>
                 ))}
@@ -271,7 +271,7 @@ export default function News({
         <div className="col-span-4 px-0 ">
           <div className="block mb-4 border-t-2 border-b-0 border-l-0 border-r-0 border-solid border-black dark:border-[#EEEFF2]">
             <div className="flex">
-              <h3 className="bg-black dark:bg-white text-white dark:text-black p-2 m-0 text-sm">
+              <h3 className="p-2 m-0 text-sm text-white bg-black dark:bg-white dark:text-black">
                 Politics
               </h3>
             </div>
@@ -290,7 +290,7 @@ export default function News({
                   >
                     {article.image_url && (
                       <img
-                        className="w-full object-cover h-96"
+                        className="object-cover w-full h-96"
                         src={
                           article.image_url !== null
                             ? article.image_url
@@ -301,29 +301,29 @@ export default function News({
                     )}
 
                     <div className="flex flex-col justify-start ml-4">
-                      <Link
+                      {/* <Link
                         className="no-underline"
                         href={`/article/${article.article_id}`}
+                      > */}
+                      <h2
+                        className={`text-black dark:text-white text-3xl ${
+                          hovered[article.article_id]
+                            ? "underline decoration-2"
+                            : "no-underline"
+                        }`}
                       >
-                        <h2
-                          className={`text-black dark:text-white text-3xl ${
-                            hovered[article.article_id]
-                              ? "underline decoration-2"
-                              : "no-underline"
-                          }`}
-                        >
-                          {article.title}
-                        </h2>
-                      </Link>
+                        {article.title}
+                      </h2>
+                      {/* </Link> */}
                     </div>
                   </li>
                 ))}
           </ul>
         </div>
-        <div className="col-span-4 px-0 flex flex-col">
+        <div className="flex flex-col col-span-4 px-0">
           <div className="block mb-4 border-t-2 border-b-0 border-l-0 border-r-0 border-solid border-black dark:border-[#EEEFF2]">
             <div className="flex">
-              <h3 className="bg-black dark:bg-white text-white dark:text-black p-2 m-0 text-sm">
+              <h3 className="p-2 m-0 text-sm text-white bg-black dark:bg-white dark:text-black">
                 Top news in your area
               </h3>
             </div>
@@ -345,10 +345,10 @@ export default function News({
                       index < 3 ? "custom-thin-border-right px-8" : ""
                     }`}
                   >
-                    <div className="flex flex-col space-y-2 mb-4">
+                    <div className="flex flex-col mb-4 space-y-2">
                       {article.image_url && (
                         <img
-                          className="h-28 w-full object-cover"
+                          className="object-cover w-full h-28"
                           src={
                             article.image_url !== null
                               ? article.image_url
@@ -363,20 +363,20 @@ export default function News({
                           alt=""
                         />
                       )}
-                      <Link
+                      {/* <Link
                         className="no-underline"
                         href={`/article/${article.article_id}`}
+                      > */}
+                      <h2
+                        className={`text-black dark:text-white text-2xl ${
+                          hovered[article.article_id]
+                            ? "underline decoration-2"
+                            : "no-underline"
+                        }`}
                       >
-                        <h2
-                          className={`text-black dark:text-white text-2xl ${
-                            hovered[article.article_id]
-                              ? "underline decoration-2"
-                              : "no-underline"
-                          }`}
-                        >
-                          {article.title}
-                        </h2>
-                      </Link>
+                        {article.title}
+                      </h2>
+                      {/* </Link> */}
                     </div>
                   </li>
                 ))}
